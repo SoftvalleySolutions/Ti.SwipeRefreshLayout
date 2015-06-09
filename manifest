@@ -2,7 +2,7 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 0.4.1
+version: 0.5
 apiversion: 2
 description: My module
 author: Raymond Kam
@@ -16,3 +16,4 @@ moduleid: com.rkam.swiperefreshlayout
 guid: fc0f2168-ac27-4239-bcb0-c51d7683eb05
 platform: android
 minsdk: 3.2.3.GA
+architectures: armeabi armeabi-v7a x86

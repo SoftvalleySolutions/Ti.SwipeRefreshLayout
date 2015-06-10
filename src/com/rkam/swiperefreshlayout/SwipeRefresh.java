@@ -84,8 +84,13 @@ public class SwipeRefresh extends TiUIView {
 		return this.layout.isRefreshing();
 	}
 	
-	public void setRefreshing(boolean refreshing) {
-		this.layout.setRefreshing(refreshing);		
+	public void setRefreshing(final boolean refreshing) {
+		view.getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				layout.setRefreshing(refreshing);
+			}
+		});
 	}
 	
 }

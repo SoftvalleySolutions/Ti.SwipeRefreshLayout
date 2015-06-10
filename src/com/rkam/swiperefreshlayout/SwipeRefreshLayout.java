@@ -16,6 +16,9 @@
 
 package com.rkam.swiperefreshlayout;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -285,7 +288,7 @@ public class SwipeRefreshLayout extends ViewGroup {
         mCircleHeight = (int) (CIRCLE_DIAMETER * metrics.density);
 
         createProgressView();
-        ViewCompat.setChildrenDrawingOrderEnabled(this, true);
+        SwipeRefreshLayout.setChildrenDrawingOrderEnabled(this, true);
         // the absolute offset has to take into account that the circle starts at an offset
         mSpinnerFinalOffset = DEFAULT_CIRCLE_TARGET * metrics.density;
         mTotalDragDistance = mSpinnerFinalOffset;
@@ -385,8 +388,8 @@ public class SwipeRefreshLayout extends ViewGroup {
         if (isAlphaUsedForScale()) {
             setColorViewAlpha((int) (progress * MAX_ALPHA));
         } else {
-            ViewCompat.setScaleX(mCircleView, progress);
-            ViewCompat.setScaleY(mCircleView, progress);
+            mCircleView.setScaleX(progress);
+            mCircleView.setScaleY(progress);
         }
     }
 
@@ -752,8 +755,8 @@ public class SwipeRefreshLayout extends ViewGroup {
                         mCircleView.setVisibility(View.VISIBLE);
                     }
                     if (!mScale) {
-                        ViewCompat.setScaleX(mCircleView, 1f);
-                        ViewCompat.setScaleY(mCircleView, 1f);
+                        mCircleView.setScaleX(1f);
+                        mCircleView.setScaleY(1f);
                     }
                     if (overscrollTop < mTotalDragDistance) {
                         if (mScale) {
@@ -907,7 +910,7 @@ public class SwipeRefreshLayout extends ViewGroup {
         if (isAlphaUsedForScale()) {
             mStartingScale = mProgress.getAlpha();
         } else {
-            mStartingScale = ViewCompat.getScaleX(mCircleView);
+            mStartingScale = mCircleView.getScaleX();
         }
         mScaleDownToStartAnimation = new Animation() {
             @Override
@@ -951,5 +954,29 @@ public class SwipeRefreshLayout extends ViewGroup {
      */
     public interface OnRefreshListener {
         public void onRefresh();
+    }
+
+    public static void setChildrenDrawingOrderEnabled(ViewGroup viewGroup, boolean enabled) {
+        final String TAG = "ViewCompat";
+        Method sChildrenDrawingOrderMethod = null;
+
+
+        try {
+            sChildrenDrawingOrderMethod = ViewGroup.class
+                    .getDeclaredMethod("setChildrenDrawingOrderEnabled", boolean.class);
+        } catch (NoSuchMethodException e) {
+            Log.e(TAG, "Unable to find childrenDrawingOrderEnabled", e);
+        }
+        sChildrenDrawingOrderMethod.setAccessible(true);
+
+        try {
+            sChildrenDrawingOrderMethod.invoke(viewGroup, enabled);
+        } catch (IllegalAccessException e) {
+            Log.e(TAG, "Unable to invoke childrenDrawingOrderEnabled", e);
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "Unable to invoke childrenDrawingOrderEnabled", e);
+        } catch (InvocationTargetException e) {
+            Log.e(TAG, "Unable to invoke childrenDrawingOrderEnabled", e);
+        }
     }
 }

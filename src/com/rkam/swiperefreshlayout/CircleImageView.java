@@ -60,7 +60,7 @@ class CircleImageView extends ImageView {
         ShapeDrawable circle;
         if (elevationSupported()) {
             circle = new ShapeDrawable(new OvalShape());
-            ViewCompat.setElevation(this, SHADOW_ELEVATION * density);
+            setElevation(SHADOW_ELEVATION * density);
         } else {
             OvalShape oval = new OvalShadow(mShadowRadius, diameter);
             circle = new ShapeDrawable(oval);

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
+import android.widget.RelativeLayout;
 
 /**
  * MySwipeRefreshLayout is a modified SwipeRefreshLayout so that Titanium views

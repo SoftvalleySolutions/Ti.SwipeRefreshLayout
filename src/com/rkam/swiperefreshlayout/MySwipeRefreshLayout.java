@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
+import android.widget.RelativeLayout;
 
 /**
  * MySwipeRefreshLayout is a modified SwipeRefreshLayout so that Titanium views
@@ -42,6 +43,10 @@ public class MySwipeRefreshLayout extends SwipeRefreshLayout {
 		if (nativeView instanceof FrameLayout && !(nativeView instanceof ScrollView)) {
 			// Try to get the native Android ListView inside the FrameLayout
         	nativeChildView = ((FrameLayout) nativeView).getChildAt(0);
+		} else if(nativeView instanceof RelativeLayout){
+			//get the ListView inside the tableView
+			nativeChildView = ((RelativeLayout) nativeView).getChildAt(1);
+			nativeChildView = ((FrameLayout) nativeChildView).getChildAt(0);
 		} else {
 			nativeChildView = nativeView;
 		}

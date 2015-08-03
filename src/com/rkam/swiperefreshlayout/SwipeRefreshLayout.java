@@ -754,7 +754,7 @@ public class SwipeRefreshLayout extends ViewGroup {
                     if (mCircleView.getVisibility() != View.VISIBLE) {
                         mCircleView.setVisibility(View.VISIBLE);
                     }
-                    if (!mScale) {
+                    if (!mScale && !isAlphaUsedForScale()) {
                         mCircleView.setScaleX(1f);
                         mCircleView.setScaleY(1f);
                     }

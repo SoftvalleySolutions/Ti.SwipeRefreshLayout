@@ -66,7 +66,7 @@ public class SwipeRefresh extends TiUIView {
 					this.layout.setNativeView(this.view.getOrCreateView().getNativeView());
 					this.layout.addView(this.view.getOrCreateView().getOuterView());
 					this.layout.setColorScheme(color1, color2, color3, color4);
-				}
+			}
 		}
 		super.processProperties(d);
 	}
@@ -85,12 +85,14 @@ public class SwipeRefresh extends TiUIView {
 	}
 	
 	public void setRefreshing(final boolean refreshing) {
-		view.getActivity().runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				layout.setRefreshing(refreshing);
-			}
-		});
+		if (this.view != null) {
+			this.view.getActivity().runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					layout.setRefreshing(refreshing);
+				}
+			});
+		}
 	}
 	
 }

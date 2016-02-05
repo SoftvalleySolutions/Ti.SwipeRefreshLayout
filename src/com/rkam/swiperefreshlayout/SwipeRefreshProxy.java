@@ -41,4 +41,13 @@ public class SwipeRefreshProxy extends TiViewProxy {
 		}
 		return false;
 	}
+
+	@Kroll.method
+	public void setEnabled(boolean refreshEnabled) {
+		if (this.swipeRefresh != null){
+			this.swipeRefresh.setEnabled(refreshEnabled);
+		}
+		return;
+	}
+
 }
